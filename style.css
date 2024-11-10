@@ -1,0 +1,122 @@
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f6f9;
+    color: #333;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+
+h1 {
+    color: #4a90e2;
+    margin-top: 20px;
+}
+
+
+#todo {
+    width: 300px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+select, button {
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 5px;
+}
+
+
+#choose {
+    background-color: #f4f6f9;
+    color: #4a90e2;
+}
+
+
+button {
+    background-color: #4a90e2;
+    color: #fff;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #357ABD;
+}
+
+
+ul#list {
+    list-style-type: none;
+    padding: 0;
+    max-width: 400px;
+    margin: 20px auto;
+    text-align: left;
+}
+
+ul#list li {
+    background-color: #ffffff;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-left: 5px solid #4a90e2;
+}
+
+/* 不同待辦事項的樣式 */
+.normalchange {
+    background-color: #ffffff;
+    border-color: #ccc;
+}
+
+.importantchange {
+    background-color: #fff3cd; /* 淡黃色 */
+    border-color: #ffc107;
+}
+
+.warnchange {
+    background-color: #f8d7da; /* 淡紅色 */
+    border-color: #dc3545;
+}
+
+.center {
+    margin: 20px;
+}
+
+button[type="text"] {
+    background-color: #f5a623;
+}
+
+button[type="text"]:hover {
+    background-color: #d09019;
+}
+
+/* 待辦事項已完成標記 */
+span[style*="display: block;"] {
+    color: #4caf50;
+    font-weight: bold;
+    font-style: italic;
+}
+
+/* 清單項目的樣式 */
+li.normal {
+    background-color: #f0f0f0; 
+    color: #333;
+}
+
+li.important {
+    background-color: #fff3cd; /* 淡黃色 */
+    color: #856404;
+}
+
+li.warn {
+    background-color: #f8d7da; /* 淡紅色 */
+    color: #721c24;
+}
+

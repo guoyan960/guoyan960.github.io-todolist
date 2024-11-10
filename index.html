@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDoList</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>To Do List</h1>
+<input id = "todo" type = "text" placeholder ="請輸入待辦事項...">
+<select id = "choose" onchange = "show()">
+  <option value = "normal">一般</option>
+  <option value = "important">重要</option>
+  <option value = "warn">緊急</option>
+</select>
+<button onclick = "my()">新增</button>
+<ul id = "list"></ul>
+<hr>
+<div class = "center">
+<button  onclick = "output()"  type = "text">匯出</button>
+<button onclick="saveTodos()">儲存</button>
+</div>
+
+<script>
+function remove(event) {
+    event.target.parentElement.remove();
+}
+
+function my() {
+    var input = document.getElementById('todo');
+    var list = document.getElementById('list');
+    var choose = document.getElementById('choose').value;
+
+    var liHTML = `
+      <li class="${choose}">
+        <span>${input.value}</span>
+        <span style="display: none;">已完成</span>
+        <button onclick="sh(event)">標示已完成</button>
+        <button onclick="remove(event)">刪除</button>
+      </li>
+    `;
+
+    list.innerHTML += liHTML;
+    input.value = "";
+}
+
+function sh(event) {
+    var e = event.target;
+    var completedText = e.previousElementSibling;
+
+    if (e.textContent === '標示已完成') {
+        e.textContent = '已完成';
+        completedText.style.display = 'block';
+    } else {
+        e.textContent = '標示已完成';
+        completedText.style.display = 'none';
+    }
+}
+
+function output() {
+    var out = document.getElementById('list').children;
+    var num = 1;
+    var text = "";
+
+    for (var x of out) {
+        let yclass = x.children[0].className;
+        if (yclass == "important") {
+            text += `${num}) *${x.children[0].textContent}* `;
+        } else if (yclass == "warn") {
+            text += `${num}) **${x.children[0].textContent}** `;
+        } else {
+            text += `${num}) ${x.children[0].textContent} `;
+        }
+        num += 1;
+    }
+    alert('今日代辦事項: ' + text);
+}
+
+function show() {
+    var color = document.getElementById('choose').value;
+    var inputField = document.getElementById('todo');
+    inputField.className = color === "important" ? "importantchange" 
+                         : color === "warn" ? "warnchange" 
+                         : "normalchange";
+}
+
+
+function saveTodos() {
+    var todos = [];
+    var out = document.getElementById('list').children;
+
+    for (var x of out) {
+        var todoText = x.children[0].textContent;
+        var todoClass = x.children[0].className;
+        var isCompleted = x.children[1].style.display === 'block';
+
+        todos.push({
+            text: todoText,
+            className: todoClass,
+            completed: isCompleted
+        });
+    }
+
+    localStorage.setItem('todos', JSON.stringify(todos));
+    alert('儲存成功！');
+}
+
+window.onload = function() {
+    var savedTodos = localStorage.getItem('todos');
+    
+    if (savedTodos) {
+        var todos = JSON.parse(savedTodos);
+        var list = document.getElementById('list');
+        todos.forEach(todo => {
+            var liHTML = `
+              <li>
+                <span class="${todo.className}">${todo.text}</span>
+                <span style="display: ${todo.completed ? 'block' : 'none'};">已完成</span>
+                <button onclick="sh(event)">${todo.completed ? '已完成' : '標示已完成'}</button>
+                <button onclick="remove(event)">刪除</button>
+              </li>
+            `;
+            list.innerHTML += liHTML;
+        });
+    }
+}
+
+
+
+</script>
+</body>
